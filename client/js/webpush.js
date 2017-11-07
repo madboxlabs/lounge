@@ -4,7 +4,7 @@ const $ = require("jquery");
 const storage = require("./localStorage");
 const socket = require("./socket");
 
-const pushNotificationsButton = $("#pushNotifications");
+let pushNotificationsButton;
 let clientSubscribed = null;
 let applicationServerKey;
 
@@ -27,7 +27,13 @@ module.exports.configurePushNotifications = (subscribedOnServer, key) => {
 	}
 };
 
-if (isAllowedServiceWorkersHost()) {
+module.exports.initialize = () => {
+	pushNotificationsButton = $("#pushNotifications");
+
+	if (!isAllowedServiceWorkersHost()) {
+		return;
+	}
+
 	$("#pushNotificationsHttps").hide();
 
 	if ("serviceWorker" in navigator) {
@@ -53,7 +59,7 @@ if (isAllowedServiceWorkersHost()) {
 			$("#pushNotificationsUnsupported span").text(err);
 		});
 	}
-}
+};
 
 function onPushButton() {
 	pushNotificationsButton.attr("disabled", true);
