@@ -7,7 +7,9 @@
   },
   "preferGlobal": true,
   "bin": {
-    "lounge": "index.js"
+    "lounge": "index.js",
+    "thelounge": "index.js",
+    "tl": "index.js"
   },
   "repository": {
     "type": "git",
