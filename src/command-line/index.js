@@ -2,6 +2,8 @@
 
 global.log = require("../log.js");
 
+const fs = require("fs");
+const path = require("path");
 const program = require("commander");
 const colors = require("colors/safe");
 const Helper = require("../helper");
@@ -15,6 +17,18 @@ program.version(Helper.getVersion(), "-v, --version")
 if (program.home) {
 	log.warn(`${colors.green("--home")} is ${colors.bold("deprecated")} and will be removed in a future version.`);
 	log.warn(`Use the ${colors.green("LOUNGE_HOME")} environment variable instead.`);
+}
+
+// Check if the app was built before calling setHome as it wants to load manifest.json from the public folder
+if (!fs.existsSync(path.join(
+	__dirname,
+	"..",
+	"..",
+	"public",
+	"manifest.json"
+))) {
+	log.error(`The client application was not built. Run ${colors.bold("NODE_ENV=production npm run build")} to resolve this.`);
+	process.exit(1);
 }
 
 let home = program.home || process.env.LOUNGE_HOME;
