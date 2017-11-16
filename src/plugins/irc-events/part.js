@@ -20,7 +20,7 @@ module.exports = function(irc, network) {
 			});
 		} else {
 			const user = chan.findUser(from);
-			chan.users = _.without(chan.users, user);
+			chan.removeUser(user);
 			client.emit("users", {
 				chan: chan.id
 			});

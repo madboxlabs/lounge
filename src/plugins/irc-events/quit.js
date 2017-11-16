@@ -1,6 +1,5 @@
 "use strict";
 
-var _ = require("lodash");
 var Msg = require("../../models/msg");
 
 module.exports = function(irc, network) {
@@ -11,7 +10,7 @@ module.exports = function(irc, network) {
 			if (typeof user === "undefined") {
 				return;
 			}
-			chan.users = _.without(chan.users, user);
+			chan.removeUser(user);
 			client.emit("users", {
 				chan: chan.id
 			});

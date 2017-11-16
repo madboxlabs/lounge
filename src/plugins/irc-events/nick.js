@@ -28,8 +28,9 @@ module.exports = function(irc, network) {
 			if (typeof user === "undefined") {
 				return;
 			}
+			chan.removeUser(user);
 			user.nick = data.new_nick;
-			chan.sortUsers(irc);
+			chan.setUser(user);
 			client.emit("users", {
 				chan: chan.id
 			});

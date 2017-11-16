@@ -1,6 +1,5 @@
 "use strict";
 
-var _ = require("lodash");
 var Msg = require("../../models/msg");
 
 module.exports = function(irc, network) {
@@ -15,9 +14,9 @@ module.exports = function(irc, network) {
 		const target = chan.getUser(data.kicked);
 
 		if (data.kicked === irc.user.nick) {
-			chan.users = [];
+			chan.users = new Map();
 		} else {
-			chan.users = _.without(chan.users, target);
+			chan.removeUser(target);
 		}
 
 		client.emit("users", {
